@@ -2,33 +2,131 @@
 <html lang="en">
   <head>
     <title>Horeb Group</title>
-    <link rel="shortcut icon" href="https://res.cloudinary.com/dydtnb3p0/image/upload/v1668340027/logo_t3xqqf.png" />
+    <link
+      rel="shortcut icon"
+      href="https://res.cloudinary.com/dydtnb3p0/image/upload/v1668340027/logo_t3xqqf.png"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-    *{
-      font-family: 'Montserrat', sans-serif;
-    }
-    .h1{
-      color: gray;
-    }
-    .centrer{
-      height: calc(100vh - 80px);
-      width: 100%;
-      position: relative;
-    }
-    .centrer h1{
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+      * {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+        width: auto;
+    height: auto;
+      }
+      .h1 {
+        color: gray;
+      }
+      .centrer {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+      }
+      .centrer h1 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      @media (hover: hover) and (pointer: fine) {
+        #cursor {
+          z-index: 99;
+          position: fixed;
+          left: 0;
+          top: 0;
+          pointer-events: none;
+          will-change: transform;
+        }
+
+        #cursor .cursor--inner {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          position: relative;
+        }
+        #cursor .cursor--inner:after {
+          content: '';
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          position: absolute;
+          border-radius: 50%;
+          background-image: url(./hexagone.svg);
+          background-repeat: no-repeat;
+          background-size: 35px;
+        }
+      }
+
+      .bandeau {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+/* img {
+    filter: blur(5px) !important;
+    -webkit-filter: blur(5px) !important;
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: url(#blur);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+    position: absolute;
+    z-index: 9;
+    height: 100%;
+    width: 50%;
+    opacity: 0.3;
+} */
     </style>
   </head>
   <body>
+    <div id="cursor">
+      <div class="cursor--inner"></div>
+    </div>
+    <div class="bandeau">
+      <video autoplay autoplay muted>
+        <source src="./banniereVideo2.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- <img src="https://img.freepik.com/photos-gratuite/texture-surface-papier-peint-toile-abstraite-couleur-blanche_74190-6385.jpg?auto=format&h=200" /> -->
+
     <div class="centrer">
       <h1 class="h1">Horeb Goupe.</h1>
     </div>
+
+    <script>
+      const cursor = document.querySelector('#cursor');
+      let mouse = { x: 300, y: 300 };
+      let pos = { x: 0, y: 0 };
+      const speed = 0.1; // between 0 and 1
+
+      const updatePosition = () => {
+        pos.x += (mouse.x - pos.x) * speed;
+        pos.y += (mouse.y - pos.y) * speed;
+        cursor.style.transform =
+          'translate3d(' + pos.x + 'px ,' + pos.y + 'px, 0)';
+      };
+
+      const updateCoordinates = (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      };
+
+      window.addEventListener('mousemove', updateCoordinates);
+
+      function loop() {
+        updatePosition();
+        requestAnimationFrame(loop);
+      }
+
+      requestAnimationFrame(loop);
+    </script>
   </body>
 </html>
